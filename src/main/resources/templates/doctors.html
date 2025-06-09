@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Praveen HealthCare - Doctors</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f4f9ff;
+      margin: 0;
+    }
+
+    nav {
+      background-color: #007bff;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 2rem;
+    }
+
+    .brand {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      margin: 0 1rem;
+      font-weight: 500;
+    }
+
+    .logout {
+      color: white;
+      text-decoration: none;
+      margin-left: 1rem;
+      font-weight: 500;
+      background-color: #FF0000;
+      padding: 0.4rem 0.8rem;
+      border-radius: 5px;
+      transition: font-weight 0.2s, background-color 0.3s;
+    }
+
+    .logout:hover {
+      font-weight: 700;
+      background-color: #cc0000;
+    }
+
+    .search-bar {
+      margin: 20px;
+    }
+
+    .search-bar input {
+      width: 100%;
+      padding: 10px;
+      font-size: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+
+    .doctor-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+      padding: 20px;
+    }
+
+    .card {
+      border: 1px solid #ccc;
+      border-radius: 12px;
+      padding: 20px;
+      background-color: white;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card h3 {
+      color: #007bff;
+      margin-top: 0;
+    }
+
+    .btn {
+      background-color: #007bff;
+      color: white;
+      padding: 10px;
+      border: none;
+      width: 100%;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .btn:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ✅ Updated Navbar with Same Style as Home Page -->
+  <nav>
+    <div class="brand">QuickCare</div>
+    <div class="nav-links">
+      <a th:href="@{/getHospitals}">Hospitals</a>
+      <a th:href="@{/getDoctors}">Doctors</a>
+      <a th:href="@{/opbooking}">OP Booking</a>
+      <a th:href="@{/Ambulance}">Ambulance</a>
+      <a th:href="@{/Medicines}">Medicines</a>
+      <a th:href="@{/ordersHistory}">Tracking</a>
+      <a th:href="@{/logout}" class="logout">Logout</a>
+    </div>
+  </nav>
+
+  <div class="search-bar">
+    <input type="text" placeholder="Search for a doctor...">
+  </div>
+
+  <div class="doctor-grid">
+    <div class="card" th:each="doctor : ${doctors}">
+      <h3 th:text="${doctor.doctor_name}">Dr. John Doe</h3>
+      <p><strong>Specialization:</strong> <span th:text="${doctor.doctor_specialization}">Cardiologist</span></p>
+      <p><strong>Hospital:</strong> <span th:text="${doctor.doctor_hospital}">Apollo Hospital, Hyderabad</span></p>
+      <p><strong>Availability:</strong> <span th:text="${doctor.doctor_availability}">Mon-Fri, 10AM - 2PM</span></p>
+      <button class="btn" th:onclick="'location.href=\'/book-appointment/'+${doctor.doctor_id}+'\''">Book Appointment</button>
+    </div>
+  </div>
+
+</body>
+</html>

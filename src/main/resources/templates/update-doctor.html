@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Update Doctor</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: radial-gradient(circle, #0d1f3c 0%, #020f1e 100%);
+      color: white;
+      padding: 40px;
+    }
+    form {
+      background-color: white;
+      color: black;
+      padding: 20px;
+      border-radius: 8px;
+      max-width: 600px;
+      margin: auto;
+    }
+    label {
+      display: block;
+      margin-top: 10px;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007bff;
+      border: none;
+      color: white;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+  </style>
+</head>
+<body>
+  <h2 style="text-align: center; color: #00cfff;">Update Doctor</h2>
+  <form th:action="@{/doctor/update}" th:object="${doctor}" method="post">
+    <input type="hidden" th:field="*{doctor_id}"/>
+    <label>Name:</label>
+    <input type="text" th:field="*{doctor_name}" required/>
+
+    <label>Specialization:</label>
+    <input type="text" th:field="*{doctor_specialization}" required/>
+
+    <label>Hospital:</label>
+    <input type="text" th:field="*{doctor_hospital}" required/>
+
+    <label>Availability:</label>
+    <input type="text" th:field="*{doctor_availability}" required/>
+
+    <button type="submit">Update Doctor</button>
+  </form>
+</body>
+</html>

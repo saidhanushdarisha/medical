@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>All Bookings</title>
+    <meta charset="UTF-8">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            background-color: #f7f9fc;
+        }
+        nav.navbar {
+            background-color: #007bff;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #cce5ff;
+        }
+
+        .logout {
+            color: white;
+            text-decoration: none;
+            margin-left: 1rem;
+            font-weight: 500;
+            background-color: #ff4d4d;
+            padding: 0.4rem 0.8rem;
+            border-radius: 5px;
+            transition: font-weight 0.2s, background-color 0.3s;
+        }
+
+        .logout:hover {
+            font-weight: 700;
+            background-color: #cc0000;
+        }
+
+        .container {
+            margin: 30px auto;
+            padding: 30px;
+            max-width: 1200px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .heading {
+            text-align: center;
+            margin-bottom: 30px;
+            color: #007bff;
+        }
+
+        .options {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .options a {
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+        .options a:hover {
+            background-color: #0056b3;
+        }
+
+        .section-title {
+            color: #007bff;
+            margin-top: 40px;
+            margin-bottom: 15px;
+            text-align: center;
+            font-size: 1.4rem;
+        }
+
+        .booking-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .booking-card {
+            width: 320px;
+            padding: 15px 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 8px rgba(0,0,0,0.05);
+        }
+
+        .booking-card h4 {
+            margin: 0 0 10px;
+            color: #007bff;
+            font-size: 1.2rem;
+        }
+
+        .booking-card p {
+            margin: 5px 0;
+            font-size: 0.95rem;
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAVIGATION BAR -->
+<nav class="navbar">
+  <div class="brand">QuickCare</div>
+  <div class="nav-links">
+    <a th:href="@{/getHospitals}">Hospitals</a>
+    <a th:href="@{/getDoctors}">Doctors</a>
+    <a th:href="@{/opbooking}">OP Booking</a>
+    <a th:href="@{/Ambulance}">Ambulance</a>
+    <a th:href="@{/Medicines}">Medicines</a>
+    <a th:href="@{/ordersHistory}">Tracking</a>
+    <a th:href="@{/logout}" class="logout">Logout</a>
+  </div>
+</nav>
+
+<!-- MAIN CONTENT -->
+<div class="container">
+    <h2 class="heading">📋 Booking Records</h2>
+
+    <div class="options">
+        <a th:href="@{/bookings/op}">🩺 OP Bookings</a>
+        <a th:href="@{/bookings/medicine}">💊 Medicine Bookings</a>
+        <a th:href="@{/bookings/ambulance}">🚑 Ambulance Bookings</a>
+    </div>
+
+    <!-- OP BOOKINGS -->
+    <h3 class="section-title">🩺 OP Bookings</h3>
+    <div th:if="${#lists.isEmpty(opBookings)}" style="text-align:center;">No OP bookings found.</div>
+    <div class="booking-grid">
+        <div th:each="booking : ${opBookings}" class="booking-card">
+            <h4>OP Appointment</h4>
+            <p><strong>Name:</strong> <span th:text="${booking.fullName}"></span></p>
+            <p><strong>Date:</strong> <span th:text="${booking.appointmentDate}"></span></p>
+            <p><strong>Time:</strong> <span th:text="${booking.timeSlot}"></span></p>
+            <p><strong>Doctor:</strong> <span th:text="${booking.doctorName}"></span></p>
+        </div>
+    </div>
+
+    <!-- MEDICINE BOOKINGS -->
+    <h3 class="section-title">💊 Medicine Bookings</h3>
+    <div th:if="${#lists.isEmpty(medicineBookings)}" style="text-align:center;">No medicine bookings found.</div>
+    <div class="booking-grid">
+        <div th:each="booking : ${medicineBookings}" class="booking-card">
+            <h4>Medicine Order</h4>
+            <p><strong>Patient:</strong> <span th:text="${booking.patientName}"></span></p>
+            <p><strong>Address:</strong> <span th:text="${booking.address}"></span></p>
+            <p><strong>Phone:</strong> <span th:text="${booking.contactNumber}"></span></p>
+        </div>
+    </div>
+
+    <!-- AMBULANCE BOOKINGS -->
+    <h3 class="section-title">🚑 Ambulance Bookings</h3>
+    <div th:if="${#lists.isEmpty(ambulanceBookings)}" style="text-align:center;">No ambulance bookings found.</div>
+    <div class="booking-grid">
+        <div th:each="booking : ${ambulanceBookings}" class="booking-card">
+            <h4>Ambulance Booking</h4>
+            <p><strong>Name:</strong> <span th:text="${booking.patientName}"></span></p>
+            <p><strong>Pickup Location:</strong> <span th:text="${booking.pickupLocation}"></span></p>
+            <p><strong>Destination:</strong> <span th:text="${booking.destinationLocation}"></span></p>
+            <p><strong>Phone:</strong> <span th:text="${booking.contactNumber}"></span></p>
+            <p><strong>Type:</strong> <span th:text="${booking.ambulanceType}"></span></p>
+            <p><strong>Booked At:</strong> <span th:text="${booking.bookingDateTime}"></span></p>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
